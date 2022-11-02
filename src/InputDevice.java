@@ -3,6 +3,8 @@ import fruits.Banana;
 import fruits.Fruit;
 import fruits.Mango;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class InputDevice {
@@ -29,8 +31,9 @@ public class InputDevice {
         return rand.nextInt(100);
     }
 
-    public Fruit[] readFruit(){
-        return new Fruit[]{new Banana(15, 3, 6), new Banana(25, 19, 2),
-        new Apple(11, 4, 8, Fruit.Color.RED), new Mango(20, 4, 4, Fruit.Color.GREEN)};
+    public ArrayList<Fruit> readFruit() {
+        return new ArrayList<>(
+                Arrays.asList(new Banana(15, 3, 25), new Banana(25, 19, 21),
+                        new Apple(11, 4, 8, Fruit.Color.RED), new Mango(20, 4, 4, Fruit.Color.GREEN)));
     }
 }

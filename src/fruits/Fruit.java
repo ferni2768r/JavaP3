@@ -1,11 +1,19 @@
 package fruits;
 
-abstract public class Fruit {
+import java.util.ArrayList;
+
+abstract public class Fruit implements Comparable<Fruit> {
     private double weight;
     private double water_content;
     private double sugar_content;
     private Color color;
 
+    @Override
+    public int compareTo(Fruit f) {
+        if (weight < f.weight) return -1;
+        else if (weight > f.weight) return 1;
+        else return Double.compare(sugar_content, f.getSugar_content());
+    }
 
     public double getSugar_content() {
         return sugar_content;
@@ -39,7 +47,7 @@ abstract public class Fruit {
         this.color = color;
     }
 
-    public static double computeWeight(Fruit[] fruits) {
+    public static double computeWeight(ArrayList<Fruit> fruits) {
         double totalWeight = 0;
         for(Fruit f: fruits){
             totalWeight += f.getWeight();
@@ -47,7 +55,7 @@ abstract public class Fruit {
         return totalWeight;
     }
 
-    public static double computeSugarContent(Fruit[] fruits) {
+    public static double computeSugarContent(ArrayList<Fruit> fruits) {
         double totalSugarContent = 0;
         for(Fruit f: fruits){
             totalSugarContent += f.getSugar_content();
@@ -55,7 +63,7 @@ abstract public class Fruit {
         return totalSugarContent;
     }
 
-    public static void prepareFruit(Fruit[] fruits) {
+    public static void prepareFruit(ArrayList<Fruit> fruits) {
         for (Fruit f: fruits){
             if(f instanceof Peelable){
                 ((Peelable) f).peelOff();

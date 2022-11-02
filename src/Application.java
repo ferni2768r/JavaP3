@@ -2,7 +2,8 @@ import fruits.Fruit;
 import fruits.Peelable;
 import fruits.SeedRemovable;
 
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Application {
     InputDevice inputDevice;
@@ -47,8 +48,19 @@ public class Application {
         System.out.println(Arrays.toString(this.wordSizeHistogram(inputDevice.getLine())));
     }
 
+    public void testFruitComparison() {
+        ArrayList<Fruit> fruits;
+        fruits = inputDevice.readFruit();
+
+        Collections.sort(fruits);
+
+        System.out.println(fruits);
+        System.out.println(Collections.min(fruits));
+        System.out.println(Collections.max(fruits));
+    }
+
     private void testFruitStuff() {
-        Fruit[] fruits = inputDevice.readFruit();
+        ArrayList<Fruit> fruits = inputDevice.readFruit();
 
         outputDevice.writeMessage(Fruit.computeSugarContent(fruits));
         outputDevice.writeMessage(Fruit.computeWeight(fruits));
@@ -64,6 +76,41 @@ public class Application {
         }
     }
 
+
+    public Map<String, Integer> countFruit(ArrayList<Fruit> fruits) {
+        Map<String, Integer> map = new HashMap<>();
+
+        for (Fruit f : fruits) {
+            if (!map.containsKey(f.getClass().toString())) {
+                map.put(f.getClass().toString(), 1);
+            } else {
+                map.replace(f.getClass().toString(), map.get(f.getClass().toString()) + 1);
+            }
+        }
+        return map;
+    }
+
+    /*
+    public String mostPopular (Map<String, Integer> f) {
+
+        for (int i = 0; i < f.size(); i ++) {
+
+        }
+
+
+        return mostPopularFruit;
+    } */
+
+    public void testStreams () {
+        ArrayList<Fruit> fruits;
+        fruits = inputDevice.readFruit();
+
+        System.out.println(fruits.stream().filter(p -> p.getSugar_content() < 20).collect(Collectors.toList()));
+        System.out.println(fruits.stream().mapToDouble(Fruit::getSugar_content).sum());
+        System.out.println(fruits.stream().mapToDouble(p -> p.getSugar_content() / p.getWater_content()).average().getAsDouble());
+    }
+
+
     public void run(){
 
         if (arg.equals("words")){
@@ -73,8 +120,5 @@ public class Application {
         }
 
         this.testFruitStuff();
-
-
-
     }
 }
