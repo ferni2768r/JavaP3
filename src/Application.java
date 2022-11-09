@@ -2,6 +2,9 @@ import fruits.Fruit;
 import fruits.Peelable;
 import fruits.SeedRemovable;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Application {
@@ -13,6 +16,23 @@ public class Application {
         this.inputDevice = inputDevice;
         this.outputDevice = outputDevice;
         this.arg = arg;
+    }
+
+    public void askUserForFile() {
+        while (true) {
+            try {
+                String fileName = this.inputDevice.getLine();
+                FileInputStream file = new FileInputStream(fileName);
+                StringBuilder sb = new StringBuilder();
+                for (int c; (c = file.read()) != -1; ) {
+                    sb.append((char) c);
+                }
+                outputDevice.writeMessage(sb.toString());
+                break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void sortNumbers(int[] numbers){
