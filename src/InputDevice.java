@@ -3,25 +3,34 @@ import fruits.Banana;
 import fruits.Fruit;
 import fruits.Mango;
 
+import java.io.InputStream;
 import java.util.Random;
+import java.util.Scanner;
 
 public class InputDevice {
+
+    InputStream inputStream;
+    Scanner scanner;
+
+    public InputDevice(InputStream inputStream) {
+        this.inputStream = inputStream;
+        scanner = new Scanner(inputStream);
+    }
 
     public String getType(){
         return "random";
     }
 
-    public int[] getNumbers(int n){
+    public int[] getNumbers(int n) {
         int[] numbers = new int[n];
-        for(int idx = 0; idx < n;idx++){
+        for(int idx = 0; idx < n; idx++) {
             numbers[idx] = this.nextInt();
         }
-
         return numbers;
     }
 
     public String getLine() {
-        return "The quick brown fox jumps over the lazy dog";
+        return scanner.nextLine();
     }
 
     public int nextInt() {
